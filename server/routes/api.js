@@ -20,7 +20,7 @@ router.route('/auctions')
         res.status(200).send(auctions);
       })
       .catch(error => {
-        res.status(404).send("Hmmm...I couldn't find the auctions. Try again later.");
+        res.status(404);
       });
   });
 
@@ -31,7 +31,7 @@ router.route('/auction/:id')
         res.status(200).send(auctionData);
       })
       .catch(error => {
-        res.status(404).send("Hmmm...I couldn't find the auctions.");
+        res.status(404);
       });
   })
   .delete((req, res) => {
@@ -40,7 +40,7 @@ router.route('/auction/:id')
         res.status(202).send(deletedAuctionData);
       })
       .catch(error => {
-        res.status(410).send("Hmmm...I couldn't find what you wanted to delete.");
+        res.status(410);
       });
   });
 
@@ -51,7 +51,7 @@ router.route('/auction/:id')
           res.status(200).send(categories);
         })
         .catch(error => {
-          res.status(404).send("Hmmm...I couldn't find the categories.");
+          res.status(404);
         });
     });
 
@@ -63,7 +63,7 @@ router.route('/auction/:id')
         res.status(200).redirect('/');
       })
       .catch(error => {
-        res.status(401).send("Hmmm...couldn't create a new auction.");
+        res.status(401);
       });
     });
 
