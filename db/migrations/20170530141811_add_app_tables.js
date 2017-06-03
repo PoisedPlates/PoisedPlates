@@ -1,6 +1,10 @@
 
 exports.up = function(knex, Promise) {
+<<<<<<< 4a1c2c1d35a36287e3f61528683e17b4bb38b109
   var date = knex.raw('now()');
+=======
+  let date = knex.raw('now()');
+>>>>>>> update migration file for time consistency
   return Promise.all([
     knex.schema.createTableIfNotExists('locations', function (table) {
       table.increments('id').unsigned().primary();
@@ -36,7 +40,11 @@ exports.up = function(knex, Promise) {
       table.increments('id').unsigned().primary();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
       table.integer('auction_id').references('auctions.id').onDelete('CASCADE');
+<<<<<<< 4a1c2c1d35a36287e3f61528683e17b4bb38b109
       table.integer('bid', 100).notNullable();
+=======
+      table.string('bid', 100).notNullable();
+>>>>>>> update migration file for time consistency
       table.timestamp('created_at').notNullable().defaultTo(date);
       table.timestamp('updated_at').notNullable().defaultTo(date);
     })
