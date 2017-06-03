@@ -4,7 +4,7 @@
   "scripts": {
     "start": "nodemon server",
     "mocha": "grunt test",
-    "build": "webpack --watch",
+    "build": "webpack --watch -p",
     "test": "jest --coverage"
   },
   "jest": {

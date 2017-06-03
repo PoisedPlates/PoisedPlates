@@ -30,7 +30,8 @@ const config = {
       swSrc: './public/service-worker.js',
       swDest: './public/dist/service-worker.js',
     })
-  ]
+  ],
+  devtool: 'source-map'
 };
 
 export default config;
