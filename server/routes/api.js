@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const models = require('../../db/models');
+const pg = require('../../db/models/pgAPI');
 const middleware = require('../middleware');
 
 router.route('/')
@@ -15,44 +15,59 @@ router.route('/')
 
 router.route('/auctions')
   .get((req, res) => {
-    return models.Auction.collection().fetch({
-      withRelated: ['images', 'location', 'auctionOwner', 'bids', 'category', 'bidsProfiles']
-    })
-      .then(collection => {
-        res.send(collection);
+    pg.getAllAuctions()
+      .then(auctions => {
+        res.status(200).send(auctions);
+      })
+      .catch(error => {
+        res.status(404).send("Hmmm...I couldn't find the auctions. Try again later.");
       });
   });
-
 
 router.route('/auction/:id')
   .get((req, res) => {
-    console.log('req.params.id', req.params.id)
-    return models.Auction.where({ id: req.params.id}).fetch({withRelated: ['images', 'location', 'auctionOwner', 'bids', 'category', 'bidsProfiles']
-    })
+    pg.getAuctionById(req.params.id)
       .then(auctionData => {
-        res.send(auctionData);
+        res.status(200).send(auctionData);
+      })
+      .catch(error => {
+        res.status(404).send("Hmmm...I couldn't find the auctions.");
       });
   })
   .delete((req, res) => {
-    return models.Auction
-      .where({ id: req.params.id })
-      .destroy()
-      .then( () => {
-        res.status(202);
+    pg.deleteAuctionById(req.params.id)
+      .then(deletedAuctionData => {
+        res.status(202).send(deletedAuctionData);
+      })
+      .catch(error => {
+        res.status(410).send("Hmmm...I couldn't find what you wanted to delete.");
       });
   });
 
-
   router.route('/categories')
     .get((req,res) => {
-      return models.Category.collection()
-      .fetch({
-        columns: ['id', 'name']
+      pg.getAllCategories()
+        .then(categories => {
+          res.status(200).send(categories);
+        })
+        .catch(error => {
+          res.status(404).send("Hmmm...I couldn't find the categories.");
+        });
+    });
+
+  router.route('/auction')
+    .post((req, res) => {
+      const options = Object.assign({}, req.body, req.session.passport);
+      pg.createAuction(options)
+      .then(() => {
+        res.status(200).redirect('/');
       })
-      .then(collection => {
-        res.send(collection);
+      .catch(error => {
+        res.status(401).send("Hmmm...couldn't create a new auction.");
       });
     });
+
+module.exports = router;
 
 // profilebids not currently working
 // after mvp for display whether an auction has a bid
@@ -66,74 +81,3 @@ router.route('/auction/:id')
   //         res.send(collection);
   //       });
   //   });
-
-  const SAMPLE = {
-    img: [],
-    title: 'Original 70s bell bottoms',
-    description: '',
-    city: 'Austin',
-    state: 'Texas',
-    date: new Date(),
-    category: 'camping'
-  };
-  
-  router.route('/auction/')
-  //middleware.auth.verify,
-  // put into post before (req, res)
-    .post( (req, res) => {
-        return models.Location.where({city: req.body.city, state: req.body.state})
-        .fetch({
-          columns: ['id']
-        })
-        .then(id => {
-          if (id) {
-            return id;
-          } else { //insert city and state into db
-            return models.Location
-              .forge({
-                city: req.body.city,
-                state: req.body.state
-              })
-              .save()
-              .then(data => {
-                // returns new increment of locations table insert
-                return data.id;
-              });
-          }
-        })
-        .then( locationId => {
-          return models.Category.where({name: req.body.category})
-            .fetch({
-              columns: ['id']
-            })
-            .then( categoryId => {
-              return models.Auction
-                .forge({
-                  // profile_id is dummy as middleware.auth is commented out
-                  profile_id: 4,
-                  category_id: categoryId.id,
-                  location_id: locationId.id,
-                  end_time: req.body.end_time || new Date() ,
-                  title: req.body.title,
-                  description: req.body.description
-                })
-                .save()
-                .then( newAuction => {
-                  return models.Image 
-                    .forge({
-                      auction_id: newAuction.id,
-                      url: req.body.url
-                    })
-                    .save()
-                    .then( insertImage => {
-                      res.redirect(202, '/');
-                    })
-                })
-            })
-        }).catch( reason => {
-          console.log(`Handle rejected promise (${reason}) here.`);
-        })
-    });
-  
-
-module.exports = router;
