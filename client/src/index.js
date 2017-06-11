@@ -16,7 +16,7 @@ import SubmitAuction from './components/SubmitAuction';
 /* * Containers * */
 import AuctionPage from './containers/AuctionPage';
 import BrowseAuctions from './containers/BrowseAuctions';
-
+import MyAccount from './containers/MyAccount'
 /* * Styles * */
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -45,6 +45,7 @@ ReactDOM.render(
             <Switch>
               <Route path="/auction/:id" component={AuctionPage} />
               <Route path="/auction/" component={SubmitAuction} />
+              <Route path="/myaccount" component={MyAccount} />
               <Route path="/" component={BrowseAuctions} />
             </Switch>
           </div>
