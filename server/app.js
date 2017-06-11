@@ -6,7 +6,7 @@ const routes = require('./routes/index');
 
 const app = express();
 
-const auctionWorker = require('../workers/auctions/endingAuctions.js');
+// const auctionWorker = require('../workers/auctions/endingAuctions.js');
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());

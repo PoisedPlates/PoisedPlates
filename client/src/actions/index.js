@@ -9,19 +9,17 @@ export const POST_BID = 'POST_BID';
 export const SELECT_IMAGE = 'SELECT_IMAGE';
 export const DESELECT_IMAGE = 'DESELECT_IMAGE';
 
-const ROOT_URL = 'http://localhost:3000/api';
-
 export function fetchAuctions() {
-  const request = axios.get(`${ROOT_URL}/auctions`);
+  const request = axios.get('/api/auctions');
 
   return {
     type: FETCH_AUCTIONS,
     payload: request
-  }
+  };
 }
 
 export function postAuction(values, callback) {
-  const request = axios.post(`${ROOT_URL}/auction`, values)
+  const request = axios.post('/api/auction', values)
     .then(() => callback());
 
   return {
@@ -31,7 +29,7 @@ export function postAuction(values, callback) {
 }
 
 export function fetchAuction(id) {
-  const request = axios.get(`${ROOT_URL}/auction/${id}`);
+  const request = axios.get('/api/auction/${id}');
 
   return {
     type: FETCH_AUCTION,
@@ -42,17 +40,17 @@ export function fetchAuction(id) {
 export const toggleModal = () => ({ type: TOGGLE_MODAL });
 
 export const fetchBid = (id) => (
-  axios.get(`${ROOT_URL}/auction/${id}/currentBid`)
+  axios.get('/api/auction/${id}/currentBid')
     .then(data => {
       return {
         type: FETCH_BID,
         payload: data
-      }
+      };
     })
-)
+);
 
 export const postBid = (id, bid) => {
-  axios.post(`${ROOT_URL}/auction/${id}`, { amt: bid });
+  axios.post('/auction/${id}', { amt: bid });
 
   return {
     type: POST_BID,
