@@ -14,7 +14,9 @@ class AuctionStatus extends Component {
           <CardHeader
             title={this.props.type}
           />
-
+          <CardText>
+          {this.props.auctions}
+          </CardText>
         </Card>
       </MuiThemeProvider>
     );

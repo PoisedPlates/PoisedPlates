@@ -184,3 +184,23 @@ module.exports.retrieveAndUpdateEndingAuctions = (currentTime, cb) => {
       cb(err, null);
     });
 };
+
+module.exports.getAuctionByProfileId = (profileId, cb) => {
+  return models.Auction
+    .where({ profile_id: profileId })
+    .fetch({
+      columns: ['id', 'location_id', 'end_time', 'title'],
+      withRelated: [{
+        'location': (qb) => {
+          qb.select('id', 'city', 'state');
+        }
+      }]
+    })
+    .then(auction => {
+      cb(null, auction);
+    })
+    .catch(err => {
+      cb(err, null);
+    });
+};
+

@@ -24,12 +24,13 @@ class MyAccount extends Component { //rip from AuctionPage
     //   const { id } = this.props.match.params;
     //   this.props.fetchAuction(id);
     // }
+    // const post = this.props.getAuctionsByOwner
   }
 
   render() {
     const { auction } = this.props;
     if (!auction) {
-      console.log(this.props)
+      console.log('this >>>',this.props)
       // return <div>Loading...</div>;
     }
 
@@ -39,9 +40,15 @@ class MyAccount extends Component { //rip from AuctionPage
           <CardHeader
             title={"My Accounts Page"}
           />
-          {console.log(this)}
-            <AuctionStatus className="auctionBids" type={"Auction Posts"} />
-      <AuctionStatus className="auctionPosts" type={"Auction Bids"}/>
+          {console.log('this>>',this)}
+            <AuctionStatus 
+              className="auctionBids" 
+              type={"Auction Posts"} 
+             />
+            <AuctionStatus 
+              className="auctionPosts" 
+              type={"Auction Bids"}
+            />
 
         </Card>
       </MuiThemeProvider>

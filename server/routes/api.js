@@ -6,6 +6,8 @@ const BidsController = require('../controllers').Bids;
 const CategoriesController = require('../controllers').Categories;
 const middleware = require('../middleware');
 
+// routx`
+
 router.route('/auctions')
   .get((req, res) => {
     AuctionsController.getAllAuctions((err, auctions) => {

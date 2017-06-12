@@ -26,3 +26,18 @@ module.exports.currentUserBid = ({ auctionId, profileId }, cb) => {
       cb(err, null);
     });
 };
+
+module.exports.currentUserBids = ({ profileId }, cb) => {
+  return models.Bid
+    .where({ profile_id: profileId })
+    .orderBy('bid', 'desc')
+    .fetch({
+      columns: ['bid']
+    })
+    .then(bid => {
+      cb(null, bid);
+    })
+    .catch(err => {
+      cb(err, null);
+    });
+};

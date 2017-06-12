@@ -37,6 +37,15 @@ export function fetchAuction(id) {
   };
 }
 
+export function fetchAuctionByProfileId(id) {
+  const request = axios.get(`${ROOT_URL}/auction/${id}`);
+
+  return {
+    type: FETCH_AUCTION_BYPROFILEID,
+    payload: request
+  };
+}
+
 export const toggleModal = () => ({ type: TOGGLE_MODAL });
 
 export const fetchBid = (id) => (
