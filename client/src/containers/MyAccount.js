@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import BidModal from './BidModal';
 
 /* * Actions * */
-import { fetchAuction, toggleModal } from '../actions';
+import { fetchAuctionByProfileId } from '../actions';
 
 /* * Utils * */
 import _ from 'lodash';
@@ -24,13 +24,13 @@ class MyAccount extends Component { //rip from AuctionPage
     //   const { id } = this.props.match.params;
     //   this.props.fetchAuction(id);
     // }
-    // const post = this.props.getAuctionsByOwner
+    this.props.fetchAuctionByProfileId()
+    console.log(this.props.fetchAuctionByProfileId())
   }
 
   render() {
     const { auction } = this.props;
     if (!auction) {
-      console.log('this >>>',this.props)
       // return <div>Loading...</div>;
     }
 
@@ -57,13 +57,11 @@ class MyAccount extends Component { //rip from AuctionPage
   }
 };
 
-const mapStateToProps = ({ auctions, bidding }, ownProps) => {
+const mapStateToProps = ({ profile }, ownProps) => {
   return {
-    auction: auctions[ownProps.match.params.id],
-    bidding: bidding
+    auctions: profile.auctions
   };
 }
 
-export { MyAccount };
-export default connect(mapStateToProps, { fetchAuction, toggleModal })(MyAccount);
+export default connect(mapStateToProps, { fetchAuctionByProfileId })(MyAccount);
 

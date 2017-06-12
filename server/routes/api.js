@@ -7,6 +7,21 @@ const CategoriesController = require('../controllers').Categories;
 const middleware = require('../middleware');
 
 // routx`
+router.route('/profile/auctions')
+  .get(middleware.auth.verify, (req, res) => {
+    console.log('api/my/a>>', postedBids)
+    let options = {
+      profileId: req.session.passport.user
+    };
+    AuctionsController.getAuctionsByProfileId(options, (err, postedBids) => {
+      if (err) {
+        console.log("Couldn't get the bids for Profile id ", err);
+      }
+      console.log('api/my/a>', postedBids)
+      res.send(postedBids);
+    });
+  });
+
 
 router.route('/auctions')
   .get((req, res) => {
