@@ -6,14 +6,31 @@ import { Link } from 'react-router-dom';
 /* * Styles * */
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FlatButton from 'material-ui/FlatButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import { deepPurple500, tealA700 } from 'material-ui/styles/colors';
+import { deepPurple500, tealA700, grey50 } from 'material-ui/styles/colors';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
+
+const LoggedIn = () => (
+  <IconMenu
+    iconButtonElement={
+      <IconButton><MoreVertIcon color={grey50}/></IconButton>
+    }
+    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+  >
+    <MenuItem primaryText="My Profile" />
+    <a href="/logout" ><MenuItem primaryText="Sign out" /></a>
+  </IconMenu>
+);
 
 const styles = {
   nav: {
@@ -23,10 +40,6 @@ const styles = {
     cursor: 'pointer',
     textDecoration: 'none',
     color: '#FFF'
-  },
-  buttons: {
-    marginTop: 5,
-    color: '#FFF',
   },
   fab: {
     margin: 0,
@@ -46,13 +59,7 @@ export default class Nav extends Component {
         <MuiThemeProvider>
           <AppBar
             title={<Link to="/" style={styles.title}>Toss.it</Link>}
-            iconElementRight={
-              <div style={styles.div}>
-                <Link to="/auction">
-                  <FlatButton label="Post" style={styles.buttons}/>
-                </Link>
-              </div>
-            }
+            iconElementRight={<LoggedIn />}
             style={styles.nav}
           />
         </MuiThemeProvider>
