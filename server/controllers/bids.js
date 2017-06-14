@@ -1,3 +1,5 @@
+const { getAuctionsByProfileId } = require('../controllers').Auctions;
+const AuctionsController = require('../controllers').Auctions;
 const models = require('../../db/models');
 
 module.exports.postBid = (options, cb) => {
@@ -36,6 +38,25 @@ module.exports.currentUserBids = ({ profileId }, cb) => {
     })
     .then(bid => {
       cb(null, bid);
+    })
+    .catch(err => {
+      cb(err, null);
+    });
+};
+
+module.exports.getBidsByProfileId = ({profileId}, cb) => {
+  return models.Bid
+    .where( { profile_id: profileId } )
+    .fetchAll({
+      columns: ['auction_id', 'bid'],
+      withRelated: [{
+        'auction': (qb) => {
+          qb.select('id', 'title', 'end_time')
+        }
+      }]
+    })
+    .then(bidsByProfileId => { 
+      cb(null, bidsByProfileId);
     })
     .catch(err => {
       cb(err, null);

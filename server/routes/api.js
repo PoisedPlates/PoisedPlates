@@ -4,24 +4,39 @@ const router = express.Router();
 const AuctionsController = require('../controllers').Auctions;
 const BidsController = require('../controllers').Bids;
 const CategoriesController = require('../controllers').Categories;
+const ProfiliesController = require('../controllers').Profiles;
 const middleware = require('../middleware');
 
 // routx`
-router.route('/profile/auctions')
+//test
+router.route('/profile/bids')
   .get(middleware.auth.verify, (req, res) => {
-    console.log('api/my/a>>', postedBids)
     let options = {
       profileId: req.session.passport.user
     };
-    AuctionsController.getAuctionsByProfileId(options, (err, postedBids) => {
+    console.log('server/app/options',options)
+    BidsController.getBidsByProfileId(options, (err, postedBids) => {
       if (err) {
-        console.log("Couldn't get the bids for Profile id ", err);
+        console.log(`Couldn't get the bids for Profile id: ${req.session.passport.user} `, err);
       }
-      console.log('api/my/a>', postedBids)
       res.send(postedBids);
     });
   });
 
+router.route('/profile/auctions')
+  .get(middleware.auth.verify, (req, res) => {
+    let options = {
+      profileId: req.session.passport.user
+    };
+    console.log('server/app/options',options)
+    AuctionsController.getAuctionsByProfileId(options, (err, postedBids) => {
+      if (err) {
+        console.log(`Couldn't get the post for Profile id: ${req.session.pasport.user} `, err);
+      }
+      console.log('api/my/post>', postedBids)
+      res.send(postedBids);
+    });
+  });
 
 router.route('/auctions')
   .get((req, res) => {

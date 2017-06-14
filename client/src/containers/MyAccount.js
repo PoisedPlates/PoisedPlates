@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import BidModal from './BidModal';
 
 /* * Actions * */
-import { fetchAuctionByProfileId } from '../actions';
+import { fetchAuctionByProfileId, fetchBidsByProfileId } from '../actions';
 
 /* * Utils * */
 import _ from 'lodash';
@@ -20,16 +20,13 @@ import AuctionStatus from '../components/AuctionStatus'
 
 class MyAccount extends Component { //rip from AuctionPage
   componentDidMount() {
-    // if (!this.props.auction) {
-    //   const { id } = this.props.match.params;
-    //   this.props.fetchAuction(id);
-    // }
     this.props.fetchAuctionByProfileId()
-    console.log(this.props.fetchAuctionByProfileId())
+    this.props.fetchBidsByProfileId()
   }
 
   render() {
     const { auction } = this.props;
+    // console.log('props>>', this.props)
     if (!auction) {
       // return <div>Loading...</div>;
     }
@@ -40,14 +37,15 @@ class MyAccount extends Component { //rip from AuctionPage
           <CardHeader
             title={"My Accounts Page"}
           />
-          {console.log('this>>',this)}
             <AuctionStatus 
               className="auctionBids" 
-              type={"Auction Posts"} 
+              type={"posts"} 
+              data ={this.props.auctions}
              />
             <AuctionStatus 
               className="auctionPosts" 
-              type={"Auction Bids"}
+              type={"bids"}
+              data={this.props.bids}
             />
 
         </Card>
@@ -59,9 +57,10 @@ class MyAccount extends Component { //rip from AuctionPage
 
 const mapStateToProps = ({ profile }, ownProps) => {
   return {
-    auctions: profile.auctions
+    auctions: profile.auctions,
+    bids: profile.bids
   };
 }
 
-export default connect(mapStateToProps, { fetchAuctionByProfileId })(MyAccount);
+export default connect(mapStateToProps, { fetchAuctionByProfileId, fetchBidsByProfileId})(MyAccount);
 

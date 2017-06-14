@@ -9,6 +9,7 @@ export const POST_BID = 'POST_BID';
 export const SELECT_IMAGE = 'SELECT_IMAGE';
 export const DESELECT_IMAGE = 'DESELECT_IMAGE';
 export const FETCH_PROFILE_AUCTIONS = 'FETCH_PROFILE_AUCTIONS';
+export const FETCH_PROFILE_BIDS = 'FETCH_PROFILE_BIDS'
 
 export function fetchAuctions() {
   const request = axios.get('/api/auctions');
@@ -39,16 +40,20 @@ export function fetchAuction(id) {
 }
 
 export function fetchAuctionByProfileId() {
-  axios.get(`api/profile/auctions`)
-    .then(data => {
-      console.log('>>data>>', data)
-      return {
-        type: FETCH_PROFILE_AUCTIONS,
-        payload: data
-      };
-    }).catch(err => {
-      console.log('catch err', err);
-    })
+  const request =  axios.get(`/api/profile/auctions`);
+  return {
+      type: FETCH_PROFILE_AUCTIONS,
+      payload: request
+    };
+};
+
+
+export function fetchBidsByProfileId() {
+  const request = axios.get('/api/profile/bids');
+  return {
+    type: FETCH_PROFILE_BIDS,
+    payload: request
+  };
 };
 
 export const toggleModal = () => ({ type: TOGGLE_MODAL });

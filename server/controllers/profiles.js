@@ -12,7 +12,6 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.getAuctionsByOwner = (profileId, cb) => {
-  console.log('getAuctionsByProfile: ', profileId);
   models.Profile
     .where({ id: profileId })
     .fetch({

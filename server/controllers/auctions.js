@@ -53,7 +53,7 @@ module.exports.getAllAuctions = (cb) => {
 module.exports.getAuctionById = (auctionId, cb) => {
   return models.Auction
     .where({ id: auctionId })
-    .fetch({
+    .fetch({  
       columns: ['id', 'category_id', 'location_id', 'end_time', 'title', 'description'],
       withRelated: [{
         'images': (qb) => {
@@ -185,19 +185,28 @@ module.exports.retrieveAndUpdateEndingAuctions = (currentTime, cb) => {
     });
 };
 
-module.exports.getAuctionByProfileId = (profileId, cb) => {
-  console.log('auction/controler>>', profileId)
+module.exports.getAuctionsByProfileId = ({profileId}, cb) => {
   return models.Auction
     .where({ profile_id: profileId })
-    .fetch({
+    .fetchAll({
       columns: ['id', 'location_id', 'end_time', 'title'],
-      withRelated: [{
-        'location': (qb) => {
-          qb.select('id', 'city', 'state');
-        }
-      }]
     })
     .then(auction => {
+      console.log('>>here', auction)
+      cb(null, auction);
+    })
+    .catch(err => {
+      cb(err, null);
+    });
+};
+module.exports.getAuctionsById = ({id}, cb) => {
+  return models.Auction
+    .where({ id: id })
+    .fetchAll({
+      columns: ['id', 'location_id', 'end_time', 'title'],
+    })
+    .then(auction => {
+      console.log('>>here', auction)
       cb(null, auction);
     })
     .catch(err => {
