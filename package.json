@@ -45,6 +45,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^6.1.5",
     "react": "^15.4.2",
+    "react-count-down": "^1.1.0",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
