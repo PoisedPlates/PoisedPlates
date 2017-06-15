@@ -13,7 +13,6 @@ const rootReducer = combineReducers({
   images: imagesReducer,
   categories: categoryReducer,
   profile: profileReducer
-
 });
 
 export default rootReducer;

@@ -17,6 +17,8 @@ import SubmitAuction from './components/SubmitAuction';
 import AuctionPage from './containers/AuctionPage';
 import BrowseAuctions from './containers/BrowseAuctions';
 import MyAccount from './containers/MyAccount'
+import Search from './containers/Search';
+
 /* * Styles * */
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -42,6 +44,7 @@ ReactDOM.render(
         <MuiThemeProvider>
           <div>
             <Nav />
+            <Search />
             <Switch>
               <Route path="/auction/:id" component={AuctionPage} />
               <Route path="/auction/" component={SubmitAuction} />

@@ -12,7 +12,7 @@ export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
 export const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
 export const FETCH_PROFILE_AUCTIONS = 'FETCH_PROFILE_AUCTIONS';
 export const FETCH_PROFILE_BIDS = 'FETCH_PROFILE_BIDS'
-
+export const QUERY_ES = 'QUERY_ES';
 
 export function fetchAuctions(categoryId) {
   const request = categoryId === 'all' ?
@@ -24,6 +24,9 @@ export function fetchAuctions(categoryId) {
     payload: request
   };
 }
+
+
+// Auction Actions:
 
 export function postAuction(values, callback) {
   const request = axios.post('/api/auction', values)
@@ -52,16 +55,33 @@ export function fetchAuctionByProfileId() {
     };
 };
 
-
-export function fetchBidsByProfileId() {
-  const request = axios.get('/api/profile/bids');
-  return {
-    type: FETCH_PROFILE_BIDS,
-    payload: request
-  };
-};
+// Animation Actions:
 
 export const toggleModal = () => ({ type: TOGGLE_MODAL });
+
+// Images Actions:
+
+export const selectImage = (display, file) => ({
+  type: SELECT_IMAGE,
+  payload: {
+    display: display,
+    file: file
+  }
+});
+
+export const deselectImage = () => ({ type: DESELECT_IMAGE });
+
+
+// Bidding Actions:
+
+export const postBid = (id, bid) => {
+  axios.post(`/api/auction/${id}`, { amt: bid });
+
+  return {
+    type: POST_BID,
+    payload: bid
+  };
+};
 
 export const fetchBid = (id) => (
   axios.get(`/api/auction/${id}/currentBid`)
@@ -73,24 +93,26 @@ export const fetchBid = (id) => (
     })
 );
 
-export const postBid = (id, bid) => {
-  axios.post(`/api/auction/${id}`, { amt: bid });
-
+export function fetchBidsByProfileId() {
+  const request = axios.get('/api/profile/bids');
   return {
-    type: POST_BID,
-    payload: bid
+    type: FETCH_PROFILE_BIDS,
+    payload: request
   };
 };
 
-export const selectImage = (display, file) => ({
-  type: SELECT_IMAGE,
-  payload: {
-    display: display,
-    file: file
-  }
-});
+// Search Actions:
 
-export const deselectImage = () => ({ type: DESELECT_IMAGE });
+export const queryES = (query) => {
+  const request = axios.get(`http://search-testdomain-mqjsglxcm7vrowa4obce2iyque.us-west-1.es.amazonaws.com/_search?q=${query}`);
+
+  return {
+    type: QUERY_ES,
+    payload: request
+  }
+}
+
+// Category Actions:
 
 export const fetchCategories = () => {
   const request = axios.get('/api/categories');
@@ -105,3 +127,6 @@ export const changeCategory = (id) => ({
   type: CHANGE_CATEGORY,
   payload: id
 })
+
+
+

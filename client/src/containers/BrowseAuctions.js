@@ -39,7 +39,7 @@ class BrowseAuctions extends Component {
                 key={auction.id}
                 title={auction.title}
               >
-                <img src={auction.images[0].url} style={styles.image}/>
+                <img src={auction.images[0].url} style={styles.image} />
               </GridTile>
             </MuiThemeProvider>
           </Link>

@@ -111,6 +111,7 @@ class Nav extends Component {
             }
             iconElementRight={<LoggedIn />}
             style={styles.nav}
+            zDepth={1}
           />
         </MuiThemeProvider>
         <MuiThemeProvider>
