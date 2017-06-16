@@ -1,4 +1,3 @@
-
 exports.up = function(knex, Promise) {
   var date = knex.raw('now()');
   return Promise.all([
