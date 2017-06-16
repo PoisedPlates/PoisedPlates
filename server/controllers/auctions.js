@@ -134,7 +134,7 @@ module.exports.createAuction = (options, cb) => {
               profile_id: options.user,
               category_id: category.id,
               location_id: location.id,
-              end_time: options.end_time || new Date(),
+              end_time: options.date || new Date(),
               title: options.title,
               description: options.description
             })
