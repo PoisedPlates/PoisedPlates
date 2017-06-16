@@ -61,6 +61,10 @@ const styles = {
     padding: '5rem'
   },
   inner: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     margin: 'auto',
     width: '100%',
     height: '100%'
@@ -82,12 +86,9 @@ const styles = {
     opacity: 0,
   },
   card: {
-    // height: 300,
     width: '80%'
   },
   state: {
-    marginLeft: 16,
-    verticalAlign: 'bottom',
     width: 80
   }
 }
@@ -199,6 +200,7 @@ class AuctionForm extends Component {
                 hintText="Category"
                 floatingLabelText="Category"
                 validate={required}
+                fullWidth={true}
               >
                 {categories.map((category, idx) => (
                   <MenuItem key={idx} value={category[0]} primaryText={category[1]} />
@@ -213,6 +215,7 @@ class AuctionForm extends Component {
                 hintText="What is it?"
                 floatingLabelText="Title"
                 validate={required}
+                fullWidth={true}
               />
             </div>
             {/*-- Description --*/}
@@ -225,6 +228,7 @@ class AuctionForm extends Component {
                 multiLine
                 rows={2}
                 validate={required}
+                fullWidth={true}
               />
             </div>
             {/*-- Location --*/}
@@ -235,8 +239,10 @@ class AuctionForm extends Component {
                 hintText="City"
                 floatingLabelText="City"
                 validate={required}
-                style={styles.align}
+                fullWidth={true}
               />
+            </div>
+            <div>
               <Field
                 name="state"
                 component={SelectField}
@@ -259,6 +265,7 @@ class AuctionForm extends Component {
                 hintText="End Date"
                 validate={required}
                 style={styles.align}
+                fullWidth={true}
               />
               {
                 // <Field
@@ -273,24 +280,23 @@ class AuctionForm extends Component {
                 //         />
                       }
             </div>
-
-            <div>
+          </form>
+          <div>
+            <RaisedButton
+              label="Submit"
+              primary={true}
+              onClick={handleSubmit(this.onSubmit.bind(this))}
+              style={styles.button}
+            />
+            <Link to="/">
               <RaisedButton
-                label="Submit"
-                primary={true}
-                onClick={handleSubmit(this.onSubmit.bind(this))}
+                label="Cancel"
+                secondary={true}
+                onClick={reset}
                 style={styles.button}
               />
-              <Link to="/">
-                <RaisedButton
-                  label="Cancel"
-                  secondary={true}
-                  onClick={reset}
-                  style={styles.button}
-                />
-              </Link>
-            </div>
-          </form>
+            </Link>
+          </div>
         </div>
       </div>
     );
