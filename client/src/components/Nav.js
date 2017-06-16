@@ -24,6 +24,31 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
 
+const categories = {
+  'antiques': 'Antiques',
+  'appliances': 'Appliances',
+  'arts+crafts': 'Arts & Crafts',
+  'atv/utv/sno': 'ATVs, UTVs, & Snowmobiles',
+  'auto parts': 'Auto Parts',
+  'baby+kid': 'Baby & Kid',
+  'beauty+hlth': 'Beauty & Health',
+  'bikes': 'Bikes',
+  'boats': 'Boats',
+  'books': 'Books',
+  'cars+trucks': 'Cars & Trucks',
+  'cell phones': 'Cell Phones',
+  'clothes': 'Clothes',
+  'computers': 'Computers',
+  'electronics': 'Electronics',
+  'farm+garden': 'Farm & Garden',
+  'furniture': 'Furniture',
+  'general': 'General',
+  'household': 'Household',
+  'camping': 'Camping',
+  'tools': 'Tools',
+  'toys+games': 'Toys & Games'
+};
+
 const LoggedIn = () => (
   <IconMenu
     iconButtonElement={
@@ -107,7 +132,7 @@ class Nav extends Component {
                   <MenuItem
                     key={category.id}
                     value={category.id}
-                    primaryText={category.name}
+                    primaryText={categories[category.name]}
                     containerElement={<Link to="/" style={styles.links} />}
                   />
                 ))}
