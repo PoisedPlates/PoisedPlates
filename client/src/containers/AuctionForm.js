@@ -31,30 +31,30 @@ const states = [
   'SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
 ];
 
-const categories = [
-  ['antiques', 'Antiques'],
-  ['appliances', 'Appliances'],
-  ['arts+crafts', 'Arts & Crafts'],
-  ['atv/utv/sno', 'ATVs, UTVs, & Snowmobiles'],
-  ['auto parts', 'Auto Parts'],
-  ['baby+kid', 'Baby & Kid'],
-  ['beauty+hlth', 'Beauty & Health'],
-  ['bikes', 'Bikes'],
-  ['boats', 'Boats'],
-  ['books', 'Books'],
-  ['cars+trucks', 'Cars & Trucks'],
-  ['cell phones', 'Cell Phones'],
-  ['clothes', 'Clothes'],
-  ['computers', 'Computers'],
-  ['electronics', 'Electronics'],
-  ['farm+garden', 'Farm & Garden'],
-  ['furniture', 'Furniture'],
-  ['general', 'Miscellaneous'],
-  ['household', 'Household'],
-  ['camping', 'Camping'],
-  ['tools', 'Tools'],
-  ['toys+games', 'Toys & Games']
-];
+const categories = {
+  'antiques': 'Antiques',
+  'appliances': 'Appliances',
+  'arts+crafts': 'Arts & Crafts',
+  'atv/utv/sno': 'ATVs, UTVs, & Snowmobiles',
+  'auto parts': 'Auto Parts',
+  'baby+kid': 'Baby & Kid',
+  'beauty+hlth': 'Beauty & Health',
+  'bikes': 'Bikes',
+  'boats': 'Boats',
+  'books': 'Books',
+  'cars+trucks': 'Cars & Trucks',
+  'cell phones': 'Cell Phones',
+  'clothes': 'Clothes',
+  'computers': 'Computers',
+  'electronics': 'Electronics',
+  'farm+garden': 'Farm & Garden',
+  'furniture': 'Furniture',
+  'general': 'General',
+  'household': 'Household',
+  'camping': 'Camping',
+  'tools': 'Tools',
+  'toys+games': 'Toys & Games'
+};
 
 const styles = {
   outer: {
@@ -202,8 +202,8 @@ class AuctionForm extends Component {
                 validate={required}
                 fullWidth={true}
               >
-                {categories.map((category, idx) => (
-                  <MenuItem key={idx} value={category[0]} primaryText={category[1]} />
+                {this.props.categories.map((category, idx) => (
+                  <MenuItem key={category.id} value={category.name} primaryText={categories[category.name]} />
                 ))}
               </Field>
             </div>
@@ -303,11 +303,12 @@ class AuctionForm extends Component {
   }
 }
 
-const mapStateToProps = ({ images, device }) => {
+const mapStateToProps = ({ images, device, categories }) => {
   return {
     mobile: device.mobile,
     displayImage: images.displayImage,
-    file: images.file
+    file: images.file,
+    categories: categories.categories
   };
 };
 
