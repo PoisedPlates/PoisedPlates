@@ -10,7 +10,7 @@ import { fetchAuctions } from '../actions';
 
 /* * Styles * */
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { GridList, GridTile } from 'material-ui/GridList';
+import { Card, CardMedia, CardTitle } from 'material-ui/Card';
 
 
 class BrowseAuctions extends Component {
@@ -35,12 +35,17 @@ class BrowseAuctions extends Component {
         <div key={auction.id} style={styles.grow}>
           <Link to={`/auction/${auction.id}`}>
             <MuiThemeProvider>
-              <GridTile
-                key={auction.id}
-                title={auction.title}
-              >
-                <img src={auction.images[0].url} style={styles.image} />
-              </GridTile>
+              <Card key={auction.id}>
+                <CardMedia
+                  overlay={<CardTitle
+                    title={auction.title}
+                    titleStyle={{fontSize: 20}}
+                  />}
+                  overlayContentStyle={{ paddingBottom: 8 }}
+                >
+                  <img src={auction.images[0].url} style={styles.image} />
+                </CardMedia>
+              </Card>
             </MuiThemeProvider>
           </Link>
         </div>
