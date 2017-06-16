@@ -27,9 +27,14 @@ const determineWinningBidder = (auction) => {
 };
 
 module.exports.getAllAuctions = (cb) => {
+<<<<<<< 1c4063caaf1dc3ebb30c143ef5e0fda89523fd38
   return models.Auction
     .where({ ended: false })
     .fetchAll({
+=======
+  return models.Auction.collection()
+    .fetch({
+>>>>>>> bug post server fix
       columns: ['id', 'category_id', 'location_id', 'end_time', 'title', 'description'],
       withRelated: [{
         'images': (qb) => {
@@ -78,7 +83,11 @@ module.exports.getAuctionById = (auctionId, cb) => {
 
 module.exports.getAuctionsByCategory = (categoryId, cb) => {
   return models.Auction
+<<<<<<< 1c4063caaf1dc3ebb30c143ef5e0fda89523fd38
     .where({ category_id: categoryId, ended: false })
+=======
+    .where({ category_id: categoryId })
+>>>>>>> bug post server fix
     .fetchAll({
       columns: ['id', 'category_id', 'location_id', 'end_time', 'title', 'description'],
       withRelated: [{
@@ -129,12 +138,21 @@ module.exports.createAuction = (options, cb) => {
           columns: ['id']
         })
         .then(category => {
+<<<<<<< 1c4063caaf1dc3ebb30c143ef5e0fda89523fd38
+=======
+          console.log('options.end_time', options.end_time);
+          console.log('options', options)
+>>>>>>> bug post server fix
           return models.Auction
             .forge({
               profile_id: options.user,
               category_id: category.id,
               location_id: location.id,
+<<<<<<< 1c4063caaf1dc3ebb30c143ef5e0fda89523fd38
               end_time: options.end_time || new Date(),
+=======
+              end_time: options.date || new Date(),
+>>>>>>> bug post server fix
               title: options.title,
               description: options.description
             })
