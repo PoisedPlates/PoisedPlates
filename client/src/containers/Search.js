@@ -29,13 +29,17 @@ class Search extends Component {
 
   render() {
     return (
-      <Paper style={ { textAlign: 'center' } } zDepth={1} rounded={false} >
+      <Paper
+        style={{ textAlign: 'center', margin: '1rem' }}
+        rounded={false}
+      >
         <AutoComplete
           dataSource={this.state.dataSource}
           onUpdateInput={() => this.onChange(event)}
           onNewRequest={() => this.onNewRequest()}
           hintText="Search"
           value={this.state.term}
+          underlineShow={false}
         />
       </Paper>
     )
